@@ -7,7 +7,7 @@ using UnityEngine;
  * in the corresponding script that needs them.
  */
 
-public class SoundController : MonoBehaviour
+public class SFXHandler : MonoBehaviour
 {
     private static AudioClip _borkSound, _enemyWolfSpawnSound, _enemyWolfDeathSound, _enemyDeathSound;
 
