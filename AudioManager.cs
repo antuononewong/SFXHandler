@@ -1,54 +1,46 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 /* Simple single script handler for sound effects. All that's needed is to 
- * place sound files into the Resources folder of the project. Create a variable
+*place sound files into the Resources folder of the project. Create a variable
  * to store x sound file. Then add a switch case for it, so it can be found when
  * the sound effect needs to be played. Prevents having to store individual sound effects
  * in the corresponding script that needs them.
  */
 
-public class AudioManager : MonoBehaviour
+public class SoundController : MonoBehaviour
 {
-    // Sound file variables
-    private AudioClip walkSound, shurikenThrow, cannonFire, jumpSound;
+    private static AudioClip _borkSound, _enemyWolfSpawnSound, _enemyWolfDeathSound, _enemyDeathSound;
 
-    private AudioSource audioSource;
+    private static AudioSource _audioSource;
 
-    // Initialize all sound files to appropriate member variables
-    void Awake()
+    private void Awake()
     {
-        walkSound = Resources.Load<AudioClip>("WalkingSound");
-        shurikenThrow = Resources.Load<AudioClip>("ShurikenThrow");
-        cannonFire = Resources.Load<AudioClip>("CannonFire");
-        jumpSound = Resources.Load<AudioClip>("JumpSound");
-        audioSource = GetComponent<AudioSource>();
+        _audioSource = GetComponent<AudioSource>();
+
+        _borkSound = Resources.Load<AudioClip>("Bork");
+        _enemyWolfSpawnSound = Resources.Load<AudioClip>("EnemyWolfSpawn");
+        _enemyWolfDeathSound = Resources.Load<AudioClip>("EnemyWolfDeath");
+        _enemyDeathSound = Resources.Load<AudioClip>("EnemyDeath");
     }
 
-    // Called when a certain sound is needed. Plays that sound file once.
-    public void PlaySound(string name)
+    // Used when a sound clip is needed by some other gameObject
+    public static void PlaySound(string clip)
     {
-        switch (name)
+        switch (clip)
         {
-            case "walkSound":
-                audioSource.PlayOneShot(walkSound);
+            case "Bork":
+                _audioSource.PlayOneShot(_borkSound);
                 break;
-            case "shurikenThrow":
-                audioSource.PlayOneShot(shurikenThrow);
+            case "EnemyWolfSpawn":
+                _audioSource.PlayOneShot(_enemyWolfSpawnSound);
                 break;
-            case "cannonFire":
-                audioSource.PlayOneShot(cannonFire);
+            case "EnemyWolfDeath":
+                _audioSource.PlayOneShot(_enemyWolfDeathSound);
                 break;
-            case "jumpSound":
-                audioSource.PlayOneShot(jumpSound);
+            case "EnemyDeath":
+                _audioSource.PlayOneShot(_enemyDeathSound);
                 break;
-        }
-    }
 
-    // Stops sounds from playing if multiple sound effects need to go off
-    // and it becomes too polluted or certain background music/dialogue needs to be
-    // heard
-    public void StopSound()
-    {
-        audioSource.Stop();
+        }
     }
 }
